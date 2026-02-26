@@ -1,25 +1,14 @@
 {
   "version": 2,
+  "functions": {
+    "api/index.ts": {
+      "includeFiles": "backend/dir_books/**"
+    }
+  },
   "rewrites": [
     {
-      "source": "/api/books(.*)",
+      "source": "/api/(.*)",
       "destination": "/api/index.ts"
-    },
-    {
-      "source": "/api/search(.*)",
-      "destination": "/api/index.ts"
-    },
-    {
-      "source": "/api/tema(.*)",
-      "destination": "/api/index.ts"
-    },
-    {
-      "source": "/api",
-      "destination": "/api/index.ts"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/frontend/$1"
     }
   ]
 }
