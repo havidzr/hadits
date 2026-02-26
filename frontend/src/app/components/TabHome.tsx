@@ -1,11 +1,11 @@
 "use client";
 
 import { Tab, Tabs } from "@nextui-org/react";
-import { FC } from "react";
+import { FC, Key } from "react";
 
 type TabHomeProps = {
     currentKey: string;
-    action: (key: any) => void;
+    action: (key: Key) => void;
 };
 
 const TabHome: FC<TabHomeProps> = ({ currentKey = "kitab", action }) => {

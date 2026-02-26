@@ -7,7 +7,7 @@ import PaginationHadits from "@/app/components/PaginationHadits";
 import MainLayout from "@/app/layouts/MainLayout";
 import axiosInstance from "@/app/utils/axiosConfig";
 import { useRouter } from "nextjs-toploader/app";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 type TemaPageProps = {
     params: {
@@ -46,7 +46,7 @@ const TemaPage: FC<TemaPageProps> = ({ params }) => {
     const [apiLoading, setApiLoading] = useState<boolean>(true);
     const [apiError, setApiError] = useState<string | null>(null);
 
-    const fetchDataHadits = async () => {
+    const fetchDataHadits = useCallback(async () => {
         setApiLoading(true);
         setApiError(null);
         try {
@@ -59,7 +59,6 @@ const TemaPage: FC<TemaPageProps> = ({ params }) => {
                 setApiError(response.data.code);
                 setApiLoading(false);
             }
-            console.log(response);
         } catch (err: any) {
             setDataHadits(null);
             if (err.status == 404) {
@@ -69,7 +68,7 @@ const TemaPage: FC<TemaPageProps> = ({ params }) => {
             }
             setApiLoading(false);
         }
-    };
+    }, [URLParams.temaId, URLParams.page]);
 
     const handlePagination = (pagination: number): void => {
         const url = `/tema/${dataHadits?.id}/${pagination}`;
@@ -79,7 +78,7 @@ const TemaPage: FC<TemaPageProps> = ({ params }) => {
     useEffect(() => {
         setApiError(null);
         fetchDataHadits();
-    }, []);
+    }, [fetchDataHadits]);
 
     console.log(dataHadits);
 

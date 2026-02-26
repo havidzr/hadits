@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, Key, useCallback, useEffect, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
 import Hero from "../components/Hero";
 import TabHome from "../components/TabHome";
@@ -29,7 +29,7 @@ const Home: FC = () => {
     const [apiError, setApiError] = useState<string | null>(null);
     const [section, setSection] = useState<string>("kitab");
 
-    const fetchData = async (endpoint: string, setter: (data: any) => void) => {
+    const fetchData = useCallback(async (endpoint: string, setter: (data: any) => void) => {
         setApiLoading(true);
         setApiError(null);
         try {
@@ -40,13 +40,13 @@ const Home: FC = () => {
             setApiError("Ada sesuatu yang error!");
             setApiLoading(false);
         }
-    };
+    }, []);
 
-    const fetchDataKitab = () => fetchData("/books", setDataKitab);
-    const fetchDataTema = () => fetchData("/tema", setDataTema);
+    const fetchDataKitab = useCallback(() => fetchData("/books", setDataKitab), [fetchData]);
+    const fetchDataTema = useCallback(() => fetchData("/tema", setDataTema), [fetchData]);
 
-    const handleSectionChange = (key: string) => {
-        setSection(key);
+    const handleSectionChange = (key: Key) => {
+        setSection(key.toString());
     };
 
     const loadingList = Array.from({ length: 9 }, (_, i) => i); // Generate 9 loading items
@@ -57,7 +57,7 @@ const Home: FC = () => {
         } else if (section === "tema" && dataTema.length === 0) {
             fetchDataTema();
         }
-    }, [section]);
+    }, [section, dataKitab.length, dataTema.length, fetchDataKitab, fetchDataTema]);
 
     const renderContent = () => {
         if (apiLoading) {

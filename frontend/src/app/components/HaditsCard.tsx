@@ -46,30 +46,6 @@ const HaditsCard: FC<HaditsCardProps> = (props) => {
 
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-    const formatHadith = (text: string, keyword?: string): string => {
-        let formatted = text;
-
-        // 1. Highlight keyword if exists
-        if (keyword?.trim()) {
-            const regex = new RegExp(`(${keyword})`, "gi");
-            formatted = formatted.replace(regex, '<span class="bg-mint-primary text-white font-medium rounded-[4px]">$1</span>');
-        }
-
-        // 2. Bold & Italic for perawi names inside brackets [...]
-        formatted = formatted.replace(/\[(.*?)\]/g, '<strong class="text-mint-primary italic">[$1]</strong>');
-
-        // 3. Add line breaks for dialogue patterns
-        // Patterns: "berkata:", "bertanya:", "menjawab:", or after a closing quote
-        formatted = formatted.replace(/(berkata:|bertanya:|menjawab:)\s*"/g, '$1<br/><br/>"');
-
-        // Add line break after the long sanad intro (often ends before the first quote or a specific phrase)
-        // This is tricky, but adding a break before the first double quote if it's far into the text helps.
-        if (formatted.indexOf('"') > 50) {
-            formatted = formatted.replace(/(\.)\s*"/, '$1<br/><br/>"');
-        }
-
-        return formatted;
-    };
 
     if (!isLoading) {
         const { id, type, number, name, hadits_content, hadits_terjemahan, isCardShare = false } = props;
@@ -82,11 +58,11 @@ const HaditsCard: FC<HaditsCardProps> = (props) => {
                 </div>
                 <div className='flex flex-col w-full bg-mint-secondary p-4 rounded-[16px] gap-3'>
                     <div className='p-3 bg-white dark:bg-black-primary rounded-[12px]'>
-                        <div className='text-end font-arab leading-[48px] font-medium text-2xl' dangerouslySetInnerHTML={{ __html: props.isSearch == "arab" ? formatHadith(hadits_content, props.keyword) : hadits_content }}></div>
+                        <div className='text-end font-arab leading-[48px] font-medium text-2xl' dangerouslySetInnerHTML={{ __html: props.isSearch == "arab" ? formatHadith(hadits_content, 'html', props.keyword) : hadits_content }}></div>
                     </div>
                     <div className='flex flex-col gap-3'>
                         <span className='text-sm text-black-secondary'>Terjemahan:</span>
-                        <div className='leading-relaxed font-id text-base' dangerouslySetInnerHTML={{ __html: formatHadith(hadits_terjemahan, props.keyword) }}></div>
+                        <div className='leading-relaxed font-id text-base' dangerouslySetInnerHTML={{ __html: formatHadith(hadits_terjemahan, 'html', props.isSearch === "indonesia" ? props.keyword : undefined) }}></div>
                         <span className='text-sm text-mint-primary font-medium'>({name})</span>
                     </div>
                 </div>

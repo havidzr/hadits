@@ -2,7 +2,7 @@
 
 import Hero from "@/app/components/Hero";
 import MainLayout from "@/app/layouts/MainLayout";
-import { FC, Suspense, useEffect, useState } from "react";
+import { FC, Suspense, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import HaditsCard from "@/app/components/HaditsCard";
 import axiosInstance from "@/app/utils/axiosConfig";
@@ -44,7 +44,7 @@ const SearchPage: FC = () => {
     const [apiLoading, setApiLoading] = useState<boolean>(true);
     const [apiError, setApiError] = useState<string | null>(null);
 
-    const fetchDataSearch = async () => {
+    const fetchDataSearch = useCallback(async () => {
         setApiLoading(true);
         try {
             const response = await axiosInstance.get(`/search?keyword=${keyword}&page=${page}`);
@@ -56,7 +56,6 @@ const SearchPage: FC = () => {
                 setApiError(response.data.code);
                 setApiLoading(false);
             }
-            console.log(response);
         } catch (err: any) {
             setDataSearch({ keyword: "", totalResults: 0, requested: 0, limit: 0, page: 0, availablePages: 0, hadiths: [] });
             if (err.status == 404) {
@@ -66,7 +65,7 @@ const SearchPage: FC = () => {
             }
             setApiLoading(false);
         }
-    };
+    }, [keyword, page]);
 
     const handlePagination = (pagination: number): void => {
         const url = `/search?keyword=${keyword}&page=${pagination}`;
@@ -82,7 +81,7 @@ const SearchPage: FC = () => {
     useEffect(() => {
         setApiError(null);
         fetchDataSearch();
-    }, [page, keyword]);
+    }, [fetchDataSearch]);
 
     return (
         <MainLayout>

@@ -5,7 +5,7 @@ import HaditsCard from "@/app/components/HaditsCard";
 import Hero from "@/app/components/Hero";
 import MainLayout from "@/app/layouts/MainLayout";
 import axiosInstance from "@/app/utils/axiosConfig";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 type TemaHaditsPageProps = {
     params: {
@@ -41,7 +41,7 @@ const TemaHaditsPage: FC<TemaHaditsPageProps> = ({ params }) => {
 
     const urlGet = `/tema/${URLParams.temaId}/hadits/${URLParams.haditsId}`;
 
-    const fetchDataHadits = async () => {
+    const fetchDataHadits = useCallback(async () => {
         setApiLoading(true);
         try {
             const response = await axiosInstance.get(urlGet);
@@ -59,12 +59,12 @@ const TemaHaditsPage: FC<TemaHaditsPageProps> = ({ params }) => {
             }
             setApiLoading(false);
         }
-    };
+    }, [urlGet]);
 
     useEffect(() => {
         setApiError(null);
         fetchDataHadits();
-    }, []);
+    }, [fetchDataHadits]);
 
     console.log(apiError);
 
