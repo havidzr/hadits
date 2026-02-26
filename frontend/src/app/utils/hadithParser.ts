@@ -2,15 +2,17 @@ export const formatHadith = (text: string, mode: 'html' | 'text' = 'html', keywo
     if (!text) return "";
     let formatted = text;
 
-    // 1. Highlight keyword (only for HTML)
-    if (mode === 'html' && keyword?.trim()) {
-        const regex = new RegExp(`(${keyword})`, "gi");
-        formatted = formatted.replace(regex, '<span class="bg-mint-primary text-white font-medium rounded-[4px]">$1</span>');
-    }
-
-    // 2. Bold & Italic for perawi names (only for HTML)
+    // 1. Bold & Italic for perawi names (only for HTML)
+    // We do this BEFORE highlighting keywords to avoid matching brackets in HTML tags
     if (mode === 'html') {
         formatted = formatted.replace(/\[(.*?)\]/g, '<strong class="text-mint-primary italic">[$1]</strong>');
+    }
+
+    // 2. Highlight keyword (only for HTML)
+    if (mode === 'html' && keyword?.trim()) {
+        // Use a regex that avoids matching inside HTML tags or attributes
+        const regex = new RegExp(`(${keyword})(?![^<]*>|[^<>]*")`, "gi");
+        formatted = formatted.replace(regex, '<span class="bg-mint-primary text-white font-medium rounded-md">$1</span>');
     }
 
     // 3. Add line breaks for dialogue
