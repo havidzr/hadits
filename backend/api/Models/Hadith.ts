@@ -1,4 +1,5 @@
-import { readdirSync } from "fs";
+import { readdirSync, readFileSync } from "fs";
+import path from "path";
 
 export type HadithContent = {
     number: number;
@@ -34,7 +35,7 @@ export type Hadiths = {
     [name: string]: HadithContent[];
 };
 
-const basePath = __dirname + "/../../dir_books";
+const basePath = path.join(process.cwd(), "backend", "dir_books");
 
 class HadithModel {
     private getAllHadithsMetadata() {
@@ -48,11 +49,9 @@ class HadithModel {
 
     private loadHadithFile(haditsName: string): HadithContent[] {
         try {
-            const filePath = `../../dir_books/${haditsName}.json`;
-            // Using require here is fine for occasional manual loading, 
-            // but in a real production environment with many files, 
-            // fs.readFileSync + JSON.parse might be better for memory management.
-            return require(filePath);
+            const filePath = path.join(process.cwd(), "backend", "dir_books", `${haditsName}.json`);
+            const data = readFileSync(filePath, "utf-8");
+            return JSON.parse(data);
         } catch (error) {
             console.error(`Error loading hadith file ${haditsName}:`, error);
             return [];
