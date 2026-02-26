@@ -5,6 +5,7 @@ import { FC, useState } from "react";
 import { SiLine } from "react-icons/si";
 import { TbBrandFacebook, TbBrandGmail, TbBrandMessenger, TbBrandPinterest, TbBrandTelegram, TbBrandWhatsapp, TbBrandX, TbCheck, TbCopy } from "react-icons/tb";
 import { motion } from "framer-motion"
+import { formatHadith } from "../utils/hadithParser";
 
 type ShareModalKitabProps = {
     type: "kitab";
@@ -34,7 +35,7 @@ const ShareModal: FC<ShareModalProps> = (props) => {
 
     const formatHadits = `\u202B${hadits_arab}
 
-Artinya: ${hadits_terjemahan}
+Artinya: ${formatHadith(hadits_terjemahan, 'text')}
 
 (${hadits_name})
 

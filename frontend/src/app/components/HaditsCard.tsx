@@ -4,6 +4,7 @@ import { Button, Modal, Skeleton, useDisclosure } from "@nextui-org/react";
 import { FC } from "react";
 import { TbShare3 } from "react-icons/tb";
 import ShareModal from "./ShareModal";
+import { formatHadith } from "../utils/hadithParser";
 
 type HaditsCardLoadingProps = {
     isLoading: true;
