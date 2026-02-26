@@ -58,7 +58,7 @@ const HaditsCard: FC<HaditsCardProps> = (props) => {
                 </div>
                 <div className='flex flex-col w-full bg-mint-secondary p-4 rounded-[16px] gap-3'>
                     <div className='p-3 bg-white dark:bg-black-primary rounded-[12px]'>
-                        <div className='text-end font-arab leading-[48px] font-medium text-2xl' dangerouslySetInnerHTML={{ __html: props.isSearch == "arab" ? formatHadith(hadits_content, 'html', props.keyword) : hadits_content }}></div>
+                        <div className='text-end font-arab leading-[48px] font-medium text-2xl' dangerouslySetInnerHTML={{ __html: formatHadith(hadits_content, 'html', props.isSearch === "arab" ? props.keyword : undefined) }}></div>
                     </div>
                     <div className='flex flex-col gap-3'>
                         <span className='text-sm text-black-secondary'>Terjemahan:</span>
