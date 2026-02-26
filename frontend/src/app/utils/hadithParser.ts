@@ -12,7 +12,7 @@ export const formatHadith = (text: string, mode: 'html' | 'text' = 'html', keywo
     if (mode === 'html' && keyword?.trim()) {
         // Use a regex that avoids matching inside HTML tags or attributes
         const regex = new RegExp(`(${keyword})(?![^<]*>|[^<>]*")`, "gi");
-        formatted = formatted.replace(regex, '<span class="bg-yellow-300 text-black font-medium rounded-md px-1">$1</span>');
+        formatted = formatted.replace(regex, '<span class="bg-mint-primary text-white font-medium rounded-md px-1">$1</span>');
     }
 
     // 3. Add line breaks for dialogue
