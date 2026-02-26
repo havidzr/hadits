@@ -3,7 +3,7 @@ import axios from "axios";
 let BaseAPIURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3300";
 
 if (process.env.NODE_ENV === "production" && !process.env.NEXT_PUBLIC_API_URL) {
-    BaseAPIURL = "https://api.tsirwah.com/"; // Legacy fallback
+    BaseAPIURL = "/api";
 }
 
 const axiosInstance = axios.create({

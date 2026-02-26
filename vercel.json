@@ -2,7 +2,19 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/books(.*)",
+      "destination": "/backend/server.ts"
+    },
+    {
+      "source": "/api/search(.*)",
+      "destination": "/backend/server.ts"
+    },
+    {
+      "source": "/api/tema(.*)",
+      "destination": "/backend/server.ts"
+    },
+    {
+      "source": "/api",
       "destination": "/backend/server.ts"
     },
     {
