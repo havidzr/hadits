@@ -1,0 +1,4 @@
+.vercel
+.netifly
+node_modules
+dist

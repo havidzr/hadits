@@ -1,0 +1,33 @@
+{
+    "name": "hadith-api",
+    "version": "1.0.0",
+    "main": "server.ts",
+    "private": false,
+    "scripts": {
+        "build": "tsc",
+        "start": "node server.js",
+        "dev": "nodemon --exec ts-node server.ts",
+        "crawl": "ts-node crawler/script.ts"
+    },
+    "dependencies": {
+        "@sparticuz/chromium": "^127.0.0",
+        "@sparticuz/chromium-min": "^127.0.0",
+        "axios": "^1.7.7",
+        "cheerio": "^1.0.0",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.1",
+        "puppeteer": "^23.3.0",
+        "puppeteer-core": "^23.3.0"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.12",
+        "@types/express": "^4.17.17",
+        "@types/node": "^18.8.3",
+        "@types/puppeteer": "^5.4.6",
+        "@vercel/node": "^3.2.12",
+        "nodemon": "^2.0.20",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.8.4"
+    }
+}
